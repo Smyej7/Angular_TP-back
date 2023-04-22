@@ -10,7 +10,10 @@ const router = new Router();
 router.get('/', (req, res) => res.status(200).json(Ticket.get().map(attachStudent)));
 router.get('/:ticketId', (req, res) => res.status(200).json(attachStudent(Ticket.getById(req.params.ticketId))));
 router.delete('/:ticketId', (req, res) => res.status(200).json(Ticket.delete(req.params.ticketId)));
-router.put('/:ticketId', (req, res) => res.status(200).json(attachStudent(Ticket.update(req.params.ticketId, req.body))));
+router.put('/:ticketId', (req, res) => {
+  delete req.body.student;
+  res.status(200).json(attachStudent(Ticket.update(req.params.ticketId, req.body)))
+});
 
 router.post('/', (req, res) => {
   try {
